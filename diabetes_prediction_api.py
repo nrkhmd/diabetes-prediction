@@ -8,7 +8,7 @@ import numpy as np
 logging.basicConfig(level=logging.INFO)
 
 # Load the model
-scaler, diabetes_model = pickle.load(open('diabetes_model.sav', 'rb'))
+scaler, diabetes_model = pickle.load(open('diabetes_model_fixed.sav', 'rb'))
 
 
 app = FastAPI()
