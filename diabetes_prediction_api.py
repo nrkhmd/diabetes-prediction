@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-import pickle
+import joblib
 import os
 import numpy as np
 from pydantic import BaseModel
@@ -7,10 +7,10 @@ from pydantic import BaseModel
 # Inisialisasi aplikasi FastAPI
 app = FastAPI()
 
-# Muat model dari file .sav
-model_path = os.path.join(os.path.dirname(__file__), "diabetes_model_fixed.sav")
+# Muat model dari file terkompresi
+model_path = os.path.join(os.path.dirname(__file__), "diabetes_model_compressed.sav")
 with open(model_path, "rb") as model_file:
-    model = pickle.load(model_file)
+    model = joblib.load(model_file)
 
 # Definisikan schema data input
 class DiabetesInput(BaseModel):
