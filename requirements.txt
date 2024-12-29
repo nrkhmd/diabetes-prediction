@@ -1,7 +1,5 @@
 fastapi
 uvicorn
 joblib
-pandas
 numpy
-scikit-learn
 gdown
