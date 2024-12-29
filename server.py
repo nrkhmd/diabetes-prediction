@@ -4,14 +4,35 @@ import pickle
 import os
 import numpy as np
 import logging
+import gdown  # Untuk mengunduh file dari Google Drive
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
+# Google Drive file ID dari URL baru
+MODEL_FILE_ID = "1XF9Z8r6JH6N0vEPxmZgK9UfHa3V_PSub"
+MODEL_FILE_NAME = "diabetes_model_fixed.sav"
+
+def download_model():
+    """Download model file from Google Drive if not exists locally."""
+    if not os.path.exists(MODEL_FILE_NAME):
+        try:
+            # Membuat URL unduhan langsung dari Google Drive
+            url = f"https://drive.google.com/uc?id={MODEL_FILE_ID}"
+            gdown.download(url, MODEL_FILE_NAME, quiet=False)
+            logging.info("Model downloaded successfully.")
+        except Exception as e:
+            logging.error("Error downloading model: %s", e)
+            raise
+    else:
+        logging.info("Model already exists locally.")
+
+# Download the model
+download_model()
+
 # Load the model dynamically
-model_path = os.path.join(os.path.dirname(__file__), "diabetes_model_fixed.sav")
 try:
-    scaler, diabetes_model = pickle.load(open(model_path, "rb"))
+    scaler, diabetes_model = pickle.load(open(MODEL_FILE_NAME, "rb"))
     logging.info("Model loaded successfully.")
 except Exception as e:
     logging.error("Error loading model: %s", e)
